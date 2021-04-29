@@ -25,13 +25,16 @@ jobs:
         repotoken: ${{ secrets.GITHUB_TOKEN }}
   deployment:
     runs-on: ubuntu-latest
-    name: Tethys App Deployment
-    needs: app-lint
+    name: Deployment
+    needs: lint
     steps:
+    - name: Get Variables
+      id: vars
+      run: echo ::set-output name=short_ref::${GITHUB_REF##*/}
     - name: Deploy Stage
       uses: fjogeleit/http-request-action@master
       with:
         method: 'POST'
         url: 'https://tethys-staging.byu.edu/apps/warehouse/install/git/'
-        data: '{"url": "https://github.com/${{ github.repository }}.git", "branch": "${{ github.ref }}"}'
-        customHeaders: '{"Authorization": "Token ${{ secrets.TETHYS_AUTH_TOKEN }}"}'
+        data: '{"url": "https://github.com/${{ github.repository }}.git", "branch": "${{ steps.vars.outputs.short_ref }}"}'
+        customHeaders: '{"Authorization": "Token ${{ secrets.TETHYS_BYU_AUTH_TOKEN }}"}'
