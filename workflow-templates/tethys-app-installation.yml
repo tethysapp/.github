@@ -1,4 +1,4 @@
-name: tethys-app-linter
+name: tethys-app-installation
 
 on: [release]
 
