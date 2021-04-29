@@ -3,9 +3,9 @@ name: tethys-app-installation
 on: [release]
 
 jobs:
-  lint:
+  app-lint:
     runs-on: ubuntu-latest
-    name: Lint
+    name: Tethys App Lint
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -14,7 +14,6 @@ jobs:
   flake:
     runs-on: ubuntu-latest
     name: Flake8
-    needs: lint
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -26,8 +25,8 @@ jobs:
         repotoken: ${{ secrets.GITHUB_TOKEN }}
   deployment:
     runs-on: ubuntu-latest
-    name: Deployment
-    needs: lint
+    name: Tethys App Deployment
+    needs: app-lint
     steps:
     - name: Deploy Stage
       uses: fjogeleit/http-request-action@master
