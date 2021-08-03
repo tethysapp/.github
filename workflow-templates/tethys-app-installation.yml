@@ -10,7 +10,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Run tethys-app-linter
-      uses: Aquaveo/tethys-app-linter@v1
+      uses: tethysapp/tethys-app-linter@v1
   flake:
     runs-on: ubuntu-latest
     name: Flake8
